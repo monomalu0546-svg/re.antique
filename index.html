@@ -1,3 +1,88 @@
-私のwebサイト
-自己紹介
-趣味は読書
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>私のWebサイト</title>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: 'Roboto', sans-serif;
+			background: linear-gradient(120deg, #232526 0%, #414345 100%);
+			color: #fff;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			animation: fadeIn 1.2s ease;
+		}
+		@keyframes fadeIn {
+			from { opacity: 0; transform: translateY(30px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+		.container {
+			background: rgba(34, 40, 49, 0.85);
+			border-radius: 18px;
+			box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+			padding: 40px 32px;
+			max-width: 400px;
+			width: 90vw;
+			text-align: center;
+		}
+		h1 {
+			font-family: 'Montserrat', sans-serif;
+			font-size: 2.4rem;
+			margin-bottom: 0.5em;
+			letter-spacing: 2px;
+			color: #00adb5;
+			text-shadow: 0 2px 8px rgba(0,173,181,0.2);
+		}
+		.section {
+			margin: 1.5em 0;
+			padding: 1em 0.5em;
+			border-bottom: 1px solid #393e46;
+		}
+		.section:last-child {
+			border-bottom: none;
+		}
+		.label {
+			font-weight: 500;
+			color: #eeeeee;
+			font-size: 1.1em;
+			margin-bottom: 0.3em;
+			display: block;
+			letter-spacing: 1px;
+		}
+		.value {
+			font-size: 1.2em;
+			color: #00adb5;
+		}
+		@media (max-width: 600px) {
+			.container {
+				padding: 24px 8px;
+				max-width: 98vw;
+			}
+			h1 {
+				font-size: 1.5rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>私のWebサイト</h1>
+		<div class="section">
+			<span class="label">自己紹介</span>
+			<span class="value">こんにちは！Web開発が好きなエンジニアです。</span>
+		</div>
+		<div class="section">
+			<span class="label">趣味</span>
+			<span class="value">読書・プログラミング・カフェ巡り</span>
+		</div>
+	</div>
+</body>
+</html>
