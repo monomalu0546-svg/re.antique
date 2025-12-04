@@ -52,6 +52,24 @@
 			width: 90vw;
 			text-align: center;
 		}
+
+		.game-link {
+			display: inline-block;
+			margin: 18px 0 8px 0;
+			padding: 0.7em 1.5em;
+			font-size: 1.1em;
+			font-family: 'Montserrat', sans-serif;
+			background: #00adb5;
+			color: #fff;
+			border-radius: 8px;
+			text-decoration: none;
+			box-shadow: 0 2px 8px rgba(0,173,181,0.15);
+			transition: background 0.2s, transform 0.2s;
+		}
+		.game-link:hover {
+			background: #007b8a;
+			transform: translateY(-2px) scale(1.04);
+		}
 		h1 {
 			font-family: 'Montserrat', sans-serif;
 			font-size: 2.4rem;
@@ -95,6 +113,7 @@
 	<div class="container">
 		<img src="bchan.png" alt="bchan" class="profile-img">
 		<h1>私のWebサイト</h1>
+		<a href="game.html" class="game-link">オセロゲームで遊ぶ</a>
 		<div class="section">
 			<span class="label">自己紹介</span>
 			<span class="value">こんにちは！Web開発が好きなエンジニアです。</span>

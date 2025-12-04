@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>オセロゲーム</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #232526 0%, #414345 100%);
+      color: #fff;
+      font-family: 'Roboto', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      color: #00adb5;
+      margin-bottom: 1em;
+    }
+    #board {
+      display: grid;
+      grid-template-columns: repeat(8, 40px);
+      grid-template-rows: repeat(8, 40px);
+      gap: 2px;
+      background: #222;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+    .cell {
+      width: 40px;
+      height: 40px;
+      background: #393e46;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cell:hover {
+      background: #00adb5;
+    }
+    .disc {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+    .black {
+      background: #222;
+      box-shadow: 0 2px 8px #0008;
+    }
+    .white {
+      background: #eee;
+      box-shadow: 0 2px 8px #fff8;
+    }
+    .info {
+      margin: 1em 0;
+      font-size: 1.1em;
+      color: #eeeeee;
+    }
+    .btn {
+      margin-top: 1em;
+      padding: 0.5em 1.2em;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background: #00adb5;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: #007b8a;
+    }
+  </style>
+</head>
+<body>
+  <h1>オセロゲーム</h1>
+  <div class="info" id="info"></div>
+  <div id="board"></div>
+  <button class="btn" onclick="resetGame()">リセット</button>
+  <script>
+    const SIZE = 8;
+    let board = Array.from({ length: SIZE }, () => Array(SIZE).fill(null));
+    let current = 'black';
+
+    function initBoard() {
+      for (let y = 0; y < SIZE; y++) {
+        for (let x = 0; x < SIZE; x++) {
+          board[y][x] = null;
+        }
+      }
+      board[3][3] = 'white';
+      board[3][4] = 'black';
+      board[4][3] = 'black';
+      board[4][4] = 'white';
+    }
+
+    function renderBoard() {
+      const boardDiv = document.getElementById('board');
+      boardDiv.innerHTML = '';
+      for (let y = 0; y < SIZE; y++) {
+        for (let x = 0; x < SIZE; x++) {
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          cell.onclick = () => handleMove(x, y);
+          if (board[y][x]) {
+            const disc = document.createElement('div');
+            disc.className = 'disc ' + board[y][x];
+            cell.appendChild(disc);
+          }
+          boardDiv.appendChild(cell);
+        }
+      }
+    }
+
+    function inBounds(x, y) {
+      return x >= 0 && x < SIZE && y >= 0 && y < SIZE;
+    }
+
+    function getFlips(x, y, color) {
+      if (board[y][x]) return [];
+      const directions = [
+        [0,1],[1,0],[0,-1],[-1,0],
+        [1,1],[1,-1],[-1,1],[-1,-1]
+      ];
+      let flips = [];
+      for (const [dx, dy] of directions) {
+        let nx = x + dx, ny = y + dy;
+        let temp = [];
+        while (inBounds(nx, ny) && board[ny][nx] && board[ny][nx] !== color) {
+          temp.push([nx, ny]);
+          nx += dx; ny += dy;
+        }
+        if (inBounds(nx, ny) && board[ny][nx] === color && temp.length) {
+          flips = flips.concat(temp);
+        }
+      }
+      return flips;
+    }
+
+    function handleMove(x, y) {
+      const flips = getFlips(x, y, current);
+      if (flips.length === 0) return;
+      board[y][x] = current;
+      for (const [fx, fy] of flips) {
+        board[fy][fx] = current;
+      }
+      current = current === 'black' ? 'white' : 'black';
+      renderBoard();
+      updateInfo();
+    }
+
+    function hasValidMove(color) {
+      for (let y = 0; y < SIZE; y++) {
+        for (let x = 0; x < SIZE; x++) {
+          if (getFlips(x, y, color).length) return true;
+        }
+      }
+      return false;
+    }
+
+    function countDiscs() {
+      let black = 0, white = 0;
+      for (let y = 0; y < SIZE; y++) {
+        for (let x = 0; x < SIZE; x++) {
+          if (board[y][x] === 'black') black++;
+          if (board[y][x] === 'white') white++;
+        }
+      }
+      return { black, white };
+    }
+
+    function updateInfo() {
+      const { black, white } = countDiscs();
+      let info = `黒: ${black}　白: ${white}　`;
+      if (!hasValidMove(current)) {
+        if (!hasValidMove(current === 'black' ? 'white' : 'black')) {
+          if (black > white) info += '黒の勝ち！';
+          else if (white > black) info += '白の勝ち！';
+          else info += '引き分け！';
+        } else {
+          info += `${current === 'black' ? '黒' : '白'}はパスです`;
+          current = current === 'black' ? 'white' : 'black';
+        }
+      } else {
+        info += `次は${current === 'black' ? '黒' : '白'}の番です`;
+      }
+      document.getElementById('info').textContent = info;
+    }
+
+    function resetGame() {
+      initBoard();
+      current = 'black';
+      renderBoard();
+      updateInfo();
+    }
+
+    // 初期化
+    initBoard();
+    renderBoard();
+    updateInfo();
+  </script>
+</body>
+</html>
