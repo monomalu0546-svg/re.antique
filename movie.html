@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猫が楽器を演奏する動画</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(120deg, #FFFDE4 0%, #FFF9C4 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 1.2s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .container {
+            background: rgba(255, 249, 196, 0.85);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(255, 214, 0, 0.18);
+            padding: 40px 32px;
+            max-width: 500px;
+            width: 95vw;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1em;
+            letter-spacing: 2px;
+            color: #FFD600;
+            text-shadow: 0 2px 8px rgba(255,214,0,0.18);
+        }
+        .movie {
+            margin: 1.5em 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin: 18px 0 8px 0;
+            padding: 0.7em 1.5em;
+            font-size: 1.1em;
+            font-family: 'Montserrat', sans-serif;
+            background: #FFD600;
+            color: #333;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(255,214,0,0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .back-link:hover {
+            background: #FFF176;
+            transform: translateY(-2px) scale(1.04);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>猫が楽器を演奏する動画</h1>
+        <div class="movie">
+            <!-- YouTube埋め込み例。著作権フリーの猫動画を使用 -->
+            <iframe width="400" height="225" src="https://www.youtube.com/embed/5dsGWM5XGdg" title="Cat playing piano" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <a href="index.html" class="back-link">トップに戻る</a>
+    </div>
+</body>
+</html>
